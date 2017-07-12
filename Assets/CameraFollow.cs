@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
     public GameObject player;
-    public Rigidbody playerRB;
+    //private Rigidbody playerRB;
 
     private Vector3 cameraOffset;
     private Quaternion cameraStartRotation;
@@ -25,11 +25,11 @@ public class CameraFollow : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        player = GameObject.FindWithTag("Player");
-        playerRB = player.GetComponent<Rigidbody>();
+        //player = GameObject.FindWithTag("Player");
+        //playerRB = player.GetComponent<Rigidbody>();
 
         cameraOffset = transform.position - player.transform.position;
-        cameraStartRotation = transform.localRotation;
+        cameraStartRotation = transform.rotation;
 
         target = Quaternion.Euler(Vector3.zero);
 
@@ -51,19 +51,20 @@ public class CameraFollow : MonoBehaviour {
         //transform.RotateAround(player.transform.position, Vector3.up, player.transform.rotation.eulerAngles.y);
         
         Vector3 lookPoint = player.transform.position;
-        lookPoint.y += 1.5f;
+        lookPoint.y += 0.5f;
 
-        rotX = clampAngle(rotX + (Input.GetAxis("Mouse X") * mouseSensX), -fovX, fovX);
-        rotY = clampAngle(rotY + (Input.GetAxis("Mouse Y") * mouseSensY), -fovY, fovY);
-        //Quaternion quatX = Quaternion.AngleAxis(rotX, Vector3.up);
-        //Quaternion quatY = Quaternion.AngleAxis(rotY, -Vector3.right);
+        if(Input.GetButton("MoveCamera"))
+        {
+            rotX = clampAngle(rotX + (Input.GetAxis("Mouse X") * mouseSensX), -fovX, fovX);
+            rotY = clampAngle(rotY + (Input.GetAxis("Mouse Y") * mouseSensY), -fovY, fovY);
+        }
 
         transform.RotateAround(lookPoint, Vector3.up, rotX);
 
         Vector3 yRotAxis = Vector3.Cross(lookPoint - transform.position, Vector3.up);
         transform.RotateAround(lookPoint, yRotAxis, rotY);
-       
+
         Quaternion lookRot = Quaternion.LookRotation(lookPoint - transform.position);
-        transform.localRotation = lookRot;
+        transform.rotation = lookRot;
 	}
 }

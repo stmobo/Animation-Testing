@@ -30,9 +30,12 @@ public class PhysicsRagdollMaintainDirection : MonoBehaviour
     void Start()
     {
         // debug only
+        
+        /*
         chestDirection = -transform.right;
         legDirection = transform.right;
         feetDirection = transform.right;
+        */
     }
 
     void SpringUpdate(Rigidbody rb, Vector3 facingDir, Vector3 torqueDirection, float stiffness, float damper)

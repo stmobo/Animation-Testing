@@ -26,6 +26,8 @@ public class PhysicsRagdollMovement : MonoBehaviour {
     
     private Vector3 chestFront;
 
+    public Vector3 walkingDir;
+
     public float totalMass;
 
     /* Default pose parameters */
@@ -85,6 +87,8 @@ public class PhysicsRagdollMovement : MonoBehaviour {
             totalMass += rb.mass;
         }
 
+        //walkingDir = transform.forward;
+
         baseForceMagnitude = totalMass * Physics.gravity.magnitude * baseForceCoeff;
     }
 	
@@ -128,7 +132,7 @@ public class PhysicsRagdollMovement : MonoBehaviour {
             int lm = ~(1<<8);
             bool foundGround = Physics.Raycast(footBottom, Vector3.down, out rcast, Mathf.Infinity, lm);
             
-            if (foundGround && rcast.distance <= 0.05)
+            if (foundGround && rcast.distance <= 0.1)
                 phase = 0;
 
             foot.AddForceAtPosition(Vector3.down * feetDropCoeff * baseForceMagnitude, footBottom);
@@ -223,7 +227,9 @@ public class PhysicsRagdollMovement : MonoBehaviour {
             rightWalking = false;
         }
 
-        StepCycleUpdate(leftFoot, leftLeg, leftUpperLeg, leftHipJoint, leftKneeJoint, leftFootBottom, transform.forward, -transform.right, ref leftStepPhase, ref leftStepStart);
-        StepCycleUpdate(rightFoot, rightLeg, rightUpperLeg, rightHipJoint, rightKneeJoint, rightFootBottom, transform.forward, transform.right, ref rightStepPhase, ref rightStepStart);
+        Vector3 rightSideMoveDir = Vector3.Cross(walkingDir, transform.up);
+
+        StepCycleUpdate(leftFoot, leftLeg, leftUpperLeg, leftHipJoint, leftKneeJoint, leftFootBottom, walkingDir, -rightSideMoveDir, ref leftStepPhase, ref leftStepStart);
+        StepCycleUpdate(rightFoot, rightLeg, rightUpperLeg, rightHipJoint, rightKneeJoint, rightFootBottom, walkingDir, rightSideMoveDir, ref rightStepPhase, ref rightStepStart);
     }
 }

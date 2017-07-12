@@ -29,6 +29,8 @@ public class PhysicsRagdollKeepChestUpright : MonoBehaviour {
     public float currentChestAngleDisplacement;
     public float currentChestAngularVelocity;
 
+    public bool drawDebugRays = false;
+
     // Use this for initialization
     void Start () {
         chestCollider = chest.GetComponent<BoxCollider>();
@@ -60,8 +62,11 @@ public class PhysicsRagdollKeepChestUpright : MonoBehaviour {
         chestBottom = chest.transform.TransformPoint(chestBottom);
         chestFront = chest.transform.TransformPoint(chestFront);
 
-        Debug.DrawRay(chestTop, Vector3.up, Color.white);
-        Debug.DrawRay(chestBottom, Vector3.down, Color.red);
+        if(drawDebugRays)
+        {
+            Debug.DrawRay(chestTop, Vector3.up, Color.white);
+            Debug.DrawRay(chestBottom, Vector3.down, Color.red);
+        }
 
         chest.AddForceAtPosition(Vector3.up * baseForceMagnitude * chestUpForceCoeff, chestTop);
         chest.AddForceAtPosition(Vector3.down * baseForceMagnitude * chestDownForceCoeff, chestBottom);
@@ -96,12 +101,15 @@ public class PhysicsRagdollKeepChestUpright : MonoBehaviour {
 
         Vector3 bottomForce = Vector3.down * (Mathf.Clamp(chest.velocity.y, 0, Mathf.Infinity) * chestStraightenLinDamper);
 
-        Debug.DrawRay(chestBottom, bottomForce, Color.magenta);
-        Debug.DrawRay(chestTop, chestStraightenAxis, Color.blue);
+        if (drawDebugRays)
+        {
+            Debug.DrawRay(chestBottom, bottomForce, Color.magenta);
+            Debug.DrawRay(chestTop, chestStraightenAxis, Color.blue);
+        }
 
         Vector3 topForce = Vector3.up * chestStraightenMagnitude;
 
-        Debug.DrawRay(chestTop, topForce, Color.cyan);
+        if(drawDebugRays) Debug.DrawRay(chestTop, topForce, Color.cyan);
 
         chest.AddForceAtPosition(topForce, chestTop);
         chest.AddForceAtPosition(bottomForce, chestBottom);
