@@ -9,6 +9,10 @@ public class PhysicsRagdollControls : MonoBehaviour {
     public Rigidbody head;
     public GameObject mainCamera;
 
+    private Collider headCollider;
+    private Vector3 headTop;
+
+    public float headHoldForceMagnitude = 10f;
     public float facingAngle = 0;
     float facingChangeRate = 90f;
 
@@ -18,6 +22,8 @@ public class PhysicsRagdollControls : MonoBehaviour {
 	void Start () {
         directionMaint = GetComponent<PhysicsRagdollMaintainDirection>();
         mover = GetComponent<PhysicsRagdollMovement>();
+
+        headCollider = head.gameObject.GetComponent<Collider>();
 	}
 	
 	// Update is called once per frame
@@ -57,8 +63,6 @@ public class PhysicsRagdollControls : MonoBehaviour {
         directionMaint.chestDirection = localFacingDir;
         directionMaint.legDirection = directionMaint.feetDirection = -localFacingDir;
 
-        // get camera looking direction
-        Quaternion lookRot = Quaternion.LookRotation(head.transform.TransformDirection(mainCamera.transform.forward), head.transform.up);
-        CharacterJoint headJoint = head.GetComponent<CharacterJoint>();
+        
 	}
 }

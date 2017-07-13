@@ -49,11 +49,18 @@ public class CameraFollow : MonoBehaviour {
 	void LateUpdate () {
         transform.position = player.transform.position + cameraOffset;
         //transform.RotateAround(player.transform.position, Vector3.up, player.transform.rotation.eulerAngles.y);
-        
+
+        float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
         Vector3 lookPoint = player.transform.position;
         lookPoint.y += 0.5f;
 
-        if(Input.GetButton("MoveCamera"))
+        if (Mathf.Abs(scrollWheel) > 0)
+        {
+            Vector3 diff = transform.position - lookPoint;
+            cameraOffset -= (diff * scrollWheel);
+        }
+
+        if (Input.GetButton("MoveCamera"))
         {
             rotX = clampAngle(rotX + (Input.GetAxis("Mouse X") * mouseSensX), -fovX, fovX);
             rotY = clampAngle(rotY + (Input.GetAxis("Mouse Y") * mouseSensY), -fovY, fovY);
@@ -66,5 +73,7 @@ public class CameraFollow : MonoBehaviour {
 
         Quaternion lookRot = Quaternion.LookRotation(lookPoint - transform.position);
         transform.rotation = lookRot;
-	}
+
+        
+    }
 }

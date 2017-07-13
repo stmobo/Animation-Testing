@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44949454, g: 0.49649078, b: 0.5591461, a: 1}
+  m_IndirectSpecularColor: {r: 0.44949424, g: 0.4964906, b: 0.5591459, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -8327,6 +8327,32 @@ CapsuleCollider:
 GameObject:
   m_PrefabParentObject: {fileID: 100008, guid: d6dad0fb52ba12f458cc7ffb66882391, type: 3}
   m_PrefabInternal: {fileID: 798944085}
+--- !u!114 &1132693789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1132693788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1edd75084e0d254f97e6aff69adbeac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 46701033}
+  headAngularXSpring:
+    actingBody: {fileID: 0}
+    springAxis: {x: 0, y: 0, z: 0}
+    targetPosition: 0
+    stiffness: 0
+    dampener: -10
+  headAngularZSpring:
+    actingBody: {fileID: 0}
+    springAxis: {x: 0, y: 0, z: 0}
+    targetPosition: 0
+    stiffness: 0
+    dampener: -10
+  headUpForce: 25
+  drawDebugRays: 0
 --- !u!114 &1132693791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8436,6 +8462,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 46701033}
   mainCamera: {fileID: 954391960}
+  headHoldForceMagnitude: 0
   facingAngle: 0
   drawDebugRays: 0
 --- !u!1 &1139482210

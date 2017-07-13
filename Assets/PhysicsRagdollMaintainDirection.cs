@@ -41,7 +41,7 @@ public class PhysicsRagdollMaintainDirection : MonoBehaviour
     void SpringUpdate(Rigidbody rb, Vector3 facingDir, Vector3 torqueDirection, float stiffness, float damper)
     {
         Quaternion lookAngle = Quaternion.LookRotation(facingDir, rb.transform.up);
-        float targetAngle = lookAngle.eulerAngles.y; // the +90f here seems a bit hackish
+        float targetAngle = lookAngle.eulerAngles.y;
 
         float displacement = targetAngle - rb.rotation.eulerAngles.y;
         float velocity = rb.angularVelocity.y * (180f / Mathf.PI);
